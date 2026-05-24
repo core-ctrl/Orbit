@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  border-color: theme("colors.line");
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 80% -10%, rgba(76, 201, 240, 0.11), transparent 34%),
+    radial-gradient(circle at 20% 5%, rgba(68, 215, 182, 0.1), transparent 28%),
+    #070b13;
+  color: #e6edf8;
+}
+
+::selection {
+  background: rgba(68, 215, 182, 0.28);
+}
+
+.panel {
+  @apply rounded-2xl border border-line bg-panel/80 shadow-glow backdrop-blur;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-line;
+}
+
+.react-grid-item.react-grid-placeholder {
+  @apply rounded-2xl bg-orbit/10;
+}
+
+.react-resizable-handle::after {
+  border-color: #44d7b6 !important;
+}
