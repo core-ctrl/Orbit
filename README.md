@@ -79,9 +79,33 @@ docker build -t orbit-frontend .
 docker run -p 3000:3000 -e NEXT_PUBLIC_API_URL=http://your-backend:8000/api/v1 orbit-frontend
 ```
 
-## 🏗️ Ecosystem
+## 🏗️ Platform Architecture
 
-Orbit is part of a larger ecosystem of tools designed to work together seamlessly. **Note: The following repositories are currently maintained as private, internal infrastructure:**
+Orbit is composed of four core pillars that work in unison to provide a seamless observability experience:
+
+### 1. Orbit SDKs (The Agents)
+The **Orbit SDKs** are lightweight libraries installed in your applications (Next.js, Node.js, Python, or Browser). They automatically hook into your application's lifecycle to capture errors, unhandled exceptions, performance traces, and breadcrumbs. 
+- **Active Connection:** Unlike traditional agents, Orbit SDKs maintain a bidirectional connection with the backend, allowing them to receive live configuration updates (like changing sampling rates on the fly) without requiring a code redeploy.
+
+### 2. Orbit Backend (The Command Center)
+The **Orbit Backend** is a high-performance server built with FastAPI. It acts as the central brain of the platform.
+- **Ingestion & Control:** It receives incoming telemetry from the SDKs via highly optimized ingestion routes. It also manages rate-limiting, authentication, and dispatching remote control commands back to the SDKs.
+- **Data Layer:** It uses PostgreSQL for persistent storage (like users, organizations, and project metadata) and Redis for real-time pub/sub and ephemeral caching.
+
+### 3. Orbit Observability (The Processor)
+The **Orbit Observability** service is a dedicated, heavy-duty processing pipeline. 
+- **Heavy Lifting:** While the backend handles the control plane, the Observability service ingests massive volumes of raw logs, distributed traces, and source maps. It processes and normalizes this data before indexing it, ensuring that the main backend remains fast and responsive even during an incident storm.
+
+### 4. Orbit Frontend (The Dashboard)
+The **Orbit Frontend** (this repository) is the Next.js application that visualizes your data.
+- **Glassmorphism UI:** Built with a premium, responsive design, it connects to the backend to display real-time incident feeds, performance metrics, and infrastructure health. 
+- **Centralized Management:** From the frontend, you can manage your teams, set up alerting rules, and remotely control your SDKs.
+
+---
+
+## 🔒 Ecosystem
+
+Orbit is part of a larger ecosystem of tools designed to work together seamlessly. **Note: The following repositories are currently maintained as private, internal infrastructure to protect proprietary backend logic and configurations:**
 
 - 🧠 **Orbit Backend** - The high-performance FastAPI server processing telemetry.
 - 🔌 **Orbit SDKs** - Client libraries for Next.js, Node, Python, and Browser.
