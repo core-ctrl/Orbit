@@ -1,6 +1,6 @@
 "use client";
 
-import { EmptyState } from "@/components/shared/Panel";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { timeAgo } from "@/lib/utils";
 import { useOrbitStore } from "@/store/orbitStore";
@@ -21,8 +21,10 @@ export function AlertWidget({ onRemove }: { onRemove?: () => void }): JSX.Elemen
           ))}
         </div>
       ) : (
-        <EmptyState message="No active alerts" />
+        <EmptyState title="No active alerts" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+

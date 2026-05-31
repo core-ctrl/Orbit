@@ -1,75 +1,92 @@
-# ORBIT
+<div align="center">
+  <img src="https://raw.githubusercontent.com/core-ctrl/Orbit/main/public/logo.png" alt="Orbit Logo" width="120" />
+  <h1>Orbit Observability Platform</h1>
+  
+  <p>
+    <b>The next-generation, self-hosted observability and incident management platform.</b>
+  </p>
+  
+  <p>
+    <img src="https://img.shields.io/badge/version-0.1.0-blue.svg" alt="Version" />
+    <img src="https://img.shields.io/badge/next.js-15.5-black.svg?logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/React-18.3-blue.svg?logo=react" alt="React" />
+    <img src="https://img.shields.io/badge/status-active-success.svg" alt="Status" />
+  </p>
+</div>
 
-Orbit is an open-source, self-hosted monitoring dashboard for applications, endpoints, databases, TLS certificates, servers, and Docker containers. It combines uptime checks, host telemetry, container controls, log streaming, and alerts in one configurable interface.
+---
 
-## Features
+## 🌌 What is Orbit?
 
-- One YAML configuration file with hot reload
-- FastAPI backend with JWT admin authentication and Socket.IO live updates
-- Host CPU, memory, disk, and network telemetry
-- Optional Docker socket integration with stats, redacted environment values, actions, events, and SSE log tailing
-- HTTP endpoint latency/history, database pings, and SSL expiry checks
-- Draggable/resizable dashboard widgets saved in the browser
-- SQLite storage by default; PostgreSQL via `DATABASE_URL`
-- Next.js responsive UI with graceful offline and Docker-disabled states
+Orbit is an enterprise-grade, **founder-level** observability dashboard built to monitor, manage, and diagnose the health of your entire tech stack in real-time. Designed to compete with industry giants, Orbit gives you absolute control over your telemetry, analytics, and incident management—without the vendor lock-in.
 
-## Repository Layout
+### 🌟 Key Features
 
-This checkout uses sibling folders so the frontend and backend can be deployed independently:
+<details>
+<summary><b>1. Real-time Incident Tracking</b></summary>
+<br/>
+Orbit tracks errors, exceptions, and anomalies as they happen. Navigate to the Incidents tab to see a live-feed of application crashes, complete with stack traces, affected users, and environments.
+</details>
 
-```text
-C:\Orbit              # frontend, Compose, docs
-C:\Orbit-Backend      # FastAPI backend and orbit.config.yaml
-```
+<details>
+<summary><b>2. Performance & Health Metrics</b></summary>
+<br/>
+View interactive charts and graphs representing your CPU, Memory, Disk, and Network usage. Orbit collects telemetry continuously via our background collectors.
+</details>
 
-In a public Git repository, these can also be placed under one parent directory and the Compose build contexts adjusted accordingly.
+<details>
+<summary><b>3. Bidirectional SDK Control</b></summary>
+<br/>
+Unlike standard analytics platforms, Orbit actively communicates with your application SDKs. Orbit's backend can dynamically push configuration updates, rate-limit ingestion, and trigger actions in your connected clients in real-time.
+</details>
 
-## Quick Start
+<details>
+<summary><b>4. Premium Design Aesthetic</b></summary>
+<br/>
+Built with a sleek, glassmorphism UI, Orbit provides a responsive and visually stunning experience. We believe developer tools should be as beautiful as they are powerful.
+</details>
+
+## 🚀 Getting Started
+
+Orbit is designed to be lightweight and zero-config out of the box.
+
+### Prerequisites
+- Node.js 18+ (or Docker)
+- Running instance of the **Orbit-Backend**
+
+### Installation
 
 ```bash
-git clone https://github.com/yourname/orbit.git
-cd orbit
-cp .env.example .env
-# Set ORBIT_SECRET and ORBIT_ADMIN_PASSWORD in .env.
-# Edit ../Orbit-Backend/orbit.config.yaml for your services.
-docker compose up -d --build
+# Clone the repository
+git clone https://github.com/core-ctrl/Orbit.git
+
+# Navigate to the frontend directory
+cd Orbit
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001), then sign in with `ORBIT_ADMIN_PASSWORD`.
+### Docker Deployment
 
-Docker monitoring is optional. On Linux, the Compose file mounts `/var/run/docker.sock`. Remove that mount or set `docker.enabled: false` when it is unavailable; Orbit hides container navigation and continues monitoring configured targets.
+Orbit is fully containerized and production-ready:
 
-For local evaluation, Compose can boot without an `.env` file using the password `orbit`; always create `.env` with strong credentials before binding Orbit beyond localhost.
-
-## Separate Deployment
-
-The frontend and backend do not need to share a host. Build the frontend with:
-
-```dotenv
-NEXT_PUBLIC_API_URL=https://monitor-api.example.com/api/v1
-NEXT_PUBLIC_SOCKET_URL=https://monitor-api.example.com
+```bash
+docker build -t orbit-frontend .
+docker run -p 3000:3000 -e NEXT_PUBLIC_API_URL=http://your-backend:8000/api/v1 orbit-frontend
 ```
 
-Deploy the backend with `ORBIT_CORS_ORIGINS` set to the frontend origin, for example `https://monitor.example.com`, plus strong values for `ORBIT_SECRET` and `ORBIT_ADMIN_PASSWORD`.
+## 🏗️ Ecosystem
 
-## Configuration
+Orbit is part of a larger ecosystem of tools designed to work together seamlessly:
 
-Edit `C:\Orbit-Backend\orbit.config.yaml` (or the mounted `/app/orbit.config.yaml`). Changes are detected automatically, or may be saved through the Settings page.
+- 🧠 **[Orbit Backend](https://github.com/core-ctrl/Orbit-backend)** - The high-performance FastAPI server processing telemetry.
+- 🔌 **[Orbit SDKs](https://github.com/core-ctrl/Orbit-SDK)** - Client libraries for Next.js, Node, Python, and Browser.
+- 🔭 **[Orbit Observability](https://github.com/core-ctrl/Orbit-Observability)** - The core ingestion engine and processing pipeline.
 
-See [Getting Started](docs/getting-started.md), [Configuration Reference](docs/config-reference.md), [Docker Setup](docs/docker-setup.md), and [API Reference](docs/api-reference.md).
+## 📄 License
 
-## Stack
-
-Frontend: Next.js 15 App Router, strict TypeScript, Tailwind CSS, Recharts, react-grid-layout, Socket.IO client, Zustand, TanStack Query. Orbit uses the patched 15.x release line because current security advisories are not remediated in Next.js 14.
-
-Backend: Python 3.11, FastAPI, python-socketio, Docker SDK, psutil, httpx, SQLAlchemy async, APScheduler, PyYAML, and JWT authentication.
-
-## Security Notes
-
-- Change the default password and secret before exposing Orbit.
-- Mounting the Docker socket gives Orbit privileged control over the Docker host. Restrict network access and run only trusted images.
-- Secrets in displayed container environment variables are redacted by common sensitive key names; do not treat this as a general secret scanner.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
+Orbit is Open Source software.

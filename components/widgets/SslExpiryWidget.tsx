@@ -1,7 +1,7 @@
 "use client";
 
-import { Badge } from "@/components/shared/Badge";
-import { EmptyState } from "@/components/shared/Panel";
+import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { useOrbitStore } from "@/store/orbitStore";
 
@@ -14,15 +14,17 @@ export function SslExpiryWidget({ onRemove }: { onRemove?: () => void }): JSX.El
           {certificates.map((certificate) => (
             <div className="flex items-center justify-between text-sm" key={certificate.domain}>
               <span>{certificate.domain}</span>
-              <Badge tone={certificate.status === "up" ? "good" : "warning"}>
+              <Badge variant={certificate.status === "up" ? "success" : "warning"}>
                 {certificate.days_remaining === null ? "error" : `${certificate.days_remaining} days`}
               </Badge>
             </div>
           ))}
         </div>
       ) : (
-        <EmptyState message="No SSL domains configured" />
+        <EmptyState title="No SSL domains configured" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+

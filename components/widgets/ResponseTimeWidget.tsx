@@ -1,7 +1,7 @@
 "use client";
 
 import { AreaChart } from "@/components/charts/AreaChart";
-import { EmptyState } from "@/components/shared/Panel";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { useOrbitStore } from "@/store/orbitStore";
 
@@ -17,8 +17,10 @@ export function ResponseTimeWidget({ onRemove }: { onRemove?: () => void }): JSX
           <AreaChart data={data} unit=" ms" color="#4cc9f0" />
         </div>
       ) : (
-        <EmptyState message="No latency samples yet" />
+        <EmptyState title="No latency samples yet" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+

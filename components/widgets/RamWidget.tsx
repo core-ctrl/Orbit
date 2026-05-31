@@ -1,7 +1,7 @@
 "use client";
 
 import { GaugeChart } from "@/components/charts/GaugeChart";
-import { EmptyState } from "@/components/shared/Panel";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { formatBytes } from "@/lib/utils";
 import { useOrbitStore } from "@/store/orbitStore";
@@ -18,8 +18,10 @@ export function RamWidget({ onRemove }: { onRemove?: () => void }): JSX.Element 
           </p>
         </>
       ) : (
-        <EmptyState message="No memory readings yet" />
+        <EmptyState title="No memory readings yet" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+

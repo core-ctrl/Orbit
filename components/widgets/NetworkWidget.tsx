@@ -1,7 +1,7 @@
 "use client";
 
 import { AreaChart } from "@/components/charts/AreaChart";
-import { EmptyState } from "@/components/shared/Panel";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { useOrbitStore } from "@/store/orbitStore";
 
@@ -16,8 +16,10 @@ export function NetworkWidget({ onRemove }: { onRemove?: () => void }): JSX.Elem
       {data.length > 1 ? (
         <div className="h-full min-h-40"><AreaChart data={data} unit=" MB" /></div>
       ) : (
-        <EmptyState message="Waiting for network history" />
+        <EmptyState title="Waiting for network history" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+

@@ -1,7 +1,6 @@
 "use client";
 
-import { EmptyState } from "@/components/shared/Panel";
-import { StatusDot } from "@/components/shared/StatusDot";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { formatBytes } from "@/lib/utils";
 import { useOrbitStore } from "@/store/orbitStore";
@@ -23,8 +22,8 @@ export function ContainerListWidget({ onRemove }: { onRemove?: () => void }): JS
             <tbody>
               {containers.slice(0, 7).map((container) => (
                 <tr className="border-t border-line/60" key={container.id}>
-                  <td className="py-3">
-                    <span className="mr-2"><StatusDot status={container.status} /></span>
+                  <td className="py-3 flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${container.status === 'running' ? 'bg-success animate-pulse' : 'bg-danger'}`} />
                     {container.name}
                   </td>
                   <td className="py-3 text-muted">{container.cpu_percent.toFixed(1)}%</td>
@@ -35,8 +34,10 @@ export function ContainerListWidget({ onRemove }: { onRemove?: () => void }): JS
           </table>
         </div>
       ) : (
-        <EmptyState message="No Docker containers detected" />
+        <EmptyState title="No Docker containers detected" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+

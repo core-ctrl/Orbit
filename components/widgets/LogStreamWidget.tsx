@@ -1,13 +1,13 @@
 "use client";
 
-import { EmptyState } from "@/components/shared/Panel";
+import { EmptyState } from "@/components/ui/empty-state";
 import { WidgetFrame } from "@/components/widgets/WidgetFrame";
 import { useOrbitStore } from "@/store/orbitStore";
 
 export function LogStreamWidget({ onRemove }: { onRemove?: () => void }): JSX.Element {
   const logs = useOrbitStore((state) => state.logs);
   return (
-    <WidgetFrame title="Live Events" onRemove={onRemove}>
+    <WidgetFrame title="Live Events" description="Real-time stream of incoming errors and performance events." onRemove={onRemove}>
       {logs.length ? (
         <div className="scrollbar max-h-full space-y-2 overflow-y-auto font-mono text-xs">
           {logs.slice(0, 10).map((log, index) => (
@@ -17,8 +17,10 @@ export function LogStreamWidget({ onRemove }: { onRemove?: () => void }): JSX.El
           ))}
         </div>
       ) : (
-        <EmptyState message="Events will appear here live" />
+        <EmptyState title="Events will appear here live" description="Waiting for data..." />
       )}
     </WidgetFrame>
   );
 }
+
+
