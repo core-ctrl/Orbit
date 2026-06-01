@@ -397,8 +397,6 @@ export default function IssueDetailPage({ params }: { params: Promise<{ projectI
           </div>
         </div>
       )}
-        </div>
-      </div>
     </div>
   );
 }
